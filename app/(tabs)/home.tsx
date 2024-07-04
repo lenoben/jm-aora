@@ -2,12 +2,22 @@ import EmptyState from "@/components/EmptyState";
 import SearchInput from "@/components/SearchInput";
 import Trending from "@/components/Trending";
 import { images } from "@/constants";
+import { getAllPosts } from "@/lib/appwrite";
+import useAppwrite from "@/lib/useAppwrite";
 import { StatusBar } from "expo-status-bar";
-import { useState } from "react";
-import { View, Text, FlatList, Image, RefreshControl } from "react-native";
+import { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  FlatList,
+  Image,
+  RefreshControl,
+  Alert,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Home = () => {
+  const { data: posts } = useAppwrite(getAllPosts);
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = async () => {
@@ -16,6 +26,8 @@ const Home = () => {
     console.log("refreshed");
     setRefreshing(false);
   };
+
+  console.log(posts);
   return (
     <SafeAreaView className="bg-primary h-full">
       <FlatList
