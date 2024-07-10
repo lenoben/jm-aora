@@ -3,7 +3,7 @@ import SearchInput from "@/components/SearchInput";
 import Trending from "@/components/Trending";
 import VideoCard from "@/components/VideoCard";
 import { images } from "@/constants";
-import { getAllPosts } from "@/lib/appwrite";
+import { getAllPosts, getLatestPosts } from "@/lib/appwrite";
 import useAppwrite from "@/lib/useAppwrite";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
@@ -19,35 +19,26 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 const Home = () => {
   const { data: posts, refetch } = useAppwrite(getAllPosts);
+  const { data: latestposts } = useAppwrite(getLatestPosts);
+
   const [refreshing, setRefreshing] = useState(false);
 
   const onRefresh = async () => {
     setRefreshing(true);
     // re call videos -> if any new videos appeared
     await refetch();
-    console.log("refreshed");
+    // console.log("refreshed");
     setRefreshing(false);
   };
 
-  console.log(posts);
+  // console.log(posts);
   return (
     <SafeAreaView className="bg-primary h-full">
       <FlatList
         // data={[{ $id: 1 }, { $id: 2 }, { $id: 3 }]}
         data={posts}
         keyExtractor={(item) => item.$id}
-        renderItem={({ item }) => (
-          <>
-            {/* <Text className="text-3xl text-white">{item.title}</Text> */}
-            {/* <VideoCard
-              title={item.title}
-              thumbnail={item.thumbnail}
-              video={item.video}
-              creator={item.username}
-            /> */}
-            <VideoCard video={item} />
-          </>
-        )}
+        renderItem={({ item }) => <VideoCard video={item} />}
         ListHeaderComponent={() => (
           <View className="my-6 px-4 space-y-6">
             <View className="justify-between items-start flex-row mb-6">
@@ -75,7 +66,7 @@ const Home = () => {
                 Latest Videos
               </Text>
 
-              <Trending posts={[{ $id: 1 }, { $id: 2 }, { $id: 3 }]} />
+              <Trending posts={latestposts ?? []} />
             </View>
           </View>
         )}
