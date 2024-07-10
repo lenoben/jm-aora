@@ -1,6 +1,7 @@
 import EmptyState from "@/components/EmptyState";
 import SearchInput from "@/components/SearchInput";
 import Trending from "@/components/Trending";
+import VideoCard from "@/components/VideoCard";
 import { images } from "@/constants";
 import { getAllPosts } from "@/lib/appwrite";
 import useAppwrite from "@/lib/useAppwrite";
@@ -36,7 +37,16 @@ const Home = () => {
         data={posts}
         keyExtractor={(item) => item.$id}
         renderItem={({ item }) => (
-          <Text className="text-3xl text-white">{item.title}</Text>
+          <>
+            {/* <Text className="text-3xl text-white">{item.title}</Text> */}
+            {/* <VideoCard
+              title={item.title}
+              thumbnail={item.thumbnail}
+              video={item.video}
+              creator={item.username}
+            /> */}
+            <VideoCard video={item} />
+          </>
         )}
         ListHeaderComponent={() => (
           <View className="my-6 px-4 space-y-6">
