@@ -3,6 +3,7 @@ import SearchInput from "@/components/SearchInput";
 import Trending from "@/components/Trending";
 import VideoCard from "@/components/VideoCard";
 import { images } from "@/constants";
+import { useGlobalContext } from "@/context/GlobalProvider";
 import { getAllPosts, getLatestPosts } from "@/lib/appwrite";
 import useAppwrite from "@/lib/useAppwrite";
 import { StatusBar } from "expo-status-bar";
@@ -18,6 +19,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Home = () => {
+  const { user, setUser, setIsLogged } = useGlobalContext();
   const { data: posts, refetch } = useAppwrite(getAllPosts);
   const { data: latestposts } = useAppwrite(getLatestPosts);
 
@@ -47,7 +49,8 @@ const Home = () => {
                   Welcome back
                 </Text>
                 <Text className="text-2xl font-psemibold text-white">
-                  lenoben
+                  {user?.username ?? "..."}
+                  {/* leon */}
                 </Text>
               </View>
               <View className="mt-1.5">
