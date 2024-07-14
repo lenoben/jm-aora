@@ -1,4 +1,3 @@
-import SignIn from "@/app/(auth)/signin";
 import {
   Account,
   Avatars,
@@ -102,3 +101,103 @@ export const getAllPosts = async () => {
     throw new Error(error);
   }
 };
+
+export const getLatestPosts = async () => {
+  try {
+    const posts = await databases.listDocuments(
+      config.databaseId,
+      config.videoCollectionId,
+      [Query.orderDesc("$createdAt", Query.limit(7))]
+    );
+    return posts.documents;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
+export const searchPosts = async (query) => {
+  try {
+    const posts = await databases.listDocuments(
+      config.databaseId,
+      config.videoCollectionId,
+      [Query.search("title", query)]
+    );
+    return posts.documents;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+};
+
+export const getUserPosts = async (userId) => {
+  try {
+    const posts = await databases.listDocuments(
+      config.databaseId,
+      config.videoCollectionId
+      // [Query.search("users", userId)]
+    );
+    const real = posts.documents.filter((doc) => doc.users.$id == userId);
+    return real;
+  } catch (err: any) {
+    throw new Error(err);
+  }
+};
+
+// Sign Out
+export async function signOut() {
+  try {
+    const session = await account.deleteSession("current");
+
+    return session;
+  } catch (error: any) {
+    throw new Error(error);
+  }
+}
+
+// // Get File Preview
+// export async function getFilePreview(fileId, type) {
+//   let fileUrl;
+
+//   try {
+//     if (type === "video") {
+//       fileUrl = Storage.getFileView(createUseronfig.storageId, fileId);
+//     } else if (type === "image") {
+//       fileUrl = Storage.getFilePreview(
+//         config.storageId,
+//         fileId,
+//         2000,
+//         2000,
+//         "top",
+//         100
+//       );
+//     } else {
+//       throw new Error("Invalid file type");
+//     }
+
+//     if (!fileUrl) throw Error;
+
+//     return fileUrl;
+//   } catch (error: any) {
+//     throw new Error(error);
+//   }
+// }
+
+// // Upload File
+// export async function uploadFile(file, type) {
+//   if (!file) return;
+
+//   const { mimeType, ...rest } = file;
+//   const asset = { type: mimeType, ...rest };
+
+//   try {
+//     const uploadedFile = await Storage.createFile(
+//       config.storageId,
+//       ID.unique(),
+//       asset
+//     );
+
+//     const fileUrl = await getFilePreview(uploadedFile.$id, type);
+//     return fileUrl;
+//   } catch (error: any) {
+//     throw new Error(error);
+//   }
+// }
