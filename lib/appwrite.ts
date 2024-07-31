@@ -96,7 +96,8 @@ export const getAllPosts = async () => {
   try {
     const posts = await databases.listDocuments(
       config.databaseId,
-      config.videoCollectionId
+      config.videoCollectionId,
+      [Query.orderDesc("$createdAt")]
     );
     return posts.documents;
   } catch (error: any) {
@@ -189,7 +190,13 @@ export async function uploadFile(file, type) {
   if (!file) return;
 
   const { mimeType, ...rest } = file;
-  const asset = { type: mimeType, ...rest };
+  // const asset = { type: mimeType, ...rest };
+  const asset = {
+    size: file.fileSize,
+    uri: file.uri,
+    type: file.mimeType,
+    name: file.fileName,
+  };
 
   try {
     const uploadedFile = await storage.createFile(
