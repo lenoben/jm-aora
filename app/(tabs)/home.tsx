@@ -50,7 +50,6 @@ const Home = () => {
                 </Text>
                 <Text className="text-2xl font-psemibold text-white">
                   {user?.username ?? "..."}
-                  {/* leon */}
                 </Text>
               </View>
               <View className="mt-1.5">

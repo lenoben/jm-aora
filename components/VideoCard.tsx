@@ -11,7 +11,7 @@ const VideoCard = ({ video: { title, thumbnail, video, users } }) => {
         <View className="flex justify-center items-center flex-row flex-1">
           <View className="w-[46px] h-[46px] rounded-lg border border-secondary flex justify-center items-center p-0.5">
             <Image
-              source={{ uri: users.avatar }}
+              source={{ uri: users?.avatar }}
               className="w-full h-full rounded-lg"
               resizeMode="cover"
             />
@@ -28,7 +28,7 @@ const VideoCard = ({ video: { title, thumbnail, video, users } }) => {
               className="text-xs text-gray-100 font-pregular"
               numberOfLines={1}
             >
-              {users.username}
+              {users?.username}
             </Text>
           </View>
         </View>
