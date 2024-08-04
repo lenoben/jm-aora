@@ -48,3 +48,28 @@ Join our community of developers creating universal apps.
 
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+## Dependencies
+
+- npx expo install expo-router react-native-safe-area-context react-native-screens expo-linking expo-constants expo-status-bar
+
+## [Entry](https://youtu.be/ZBCUegTZF7M?si=yFDrgOpYFG1wm0mq)
+
+- npx expo start -c
+  Having issues use
+- npx expo start --tunnel
+
+### To use [tailwind](https://www.nativewind.dev/quick-starts/expo)
+
+- npm install nativewind
+- npm install --save-dev tailwindcss@3.3.2
+- read the docs
+- npx tailwindcss init
+
+### appwrite andorid package name
+
+com.tyr.aora
+
+- put it in the android/ios app.json object
+- To use it with react-native [github](https://github.com/appwrite/sdk-for-react-native)
+- npx expo install react-native-appwrite react-native-url-polyfill
